@@ -152,6 +152,16 @@ func (c *BoundContract) GetDeployer() *Transaction {
 }
 
 // Call invokes the (constant) contract method with params as input values and
+// returns a string.
+func (c *BoundContract) CallForString(opts *CallOpts, method string, args *Interfaces) (result string,  _ error) {
+        if err := c.contract.Call(&opts.opts, &result, method, args.objects...); err != nil {
+                return "", err
+        }
+        return result, nil
+}
+
+
+// Call invokes the (constant) contract method with params as input values and
 // sets the output to result.
 func (c *BoundContract) Call(opts *CallOpts, out *Interfaces, method string, args *Interfaces) error {
 	results := make([]interface{}, len(out.objects))
